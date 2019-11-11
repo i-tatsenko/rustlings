@@ -10,13 +10,15 @@ pub fn pop_too_much() -> bool {
     let last = list.pop().unwrap();
     println!("The last item in the list is {:?}", last);
 
-    let second_to_last = list.pop().unwrap();
-    println!(
-        "The second-to-last item in the list is {:?}",
-        second_to_last
-    );
-    true
+    return list.pop().map_or(true, |item: i32| -> bool {
+        println!(
+            "The second-to-last item in the list is {:?}",
+            item
+        );
+        return true;
+    });
 }
+
 
 #[cfg(test)]
 mod tests {
@@ -27,27 +29,6 @@ mod tests {
         assert!(pop_too_much());
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 // Try using a `match` statement where the arms are `Some(thing)` and `None`.

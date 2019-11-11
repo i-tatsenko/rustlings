@@ -19,3 +19,9 @@ fn verify_test() {
     assert_eq!(70, price1);
     assert_eq!(65, price2);
 }
+
+
+fn calculate_apple_price(number: i32) -> i32 {
+    let multiplier = if number > 40 { 1 } else { 2 };
+    return number * multiplier;
+}
