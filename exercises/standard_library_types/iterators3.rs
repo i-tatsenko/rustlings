@@ -23,7 +23,15 @@ pub struct NotDivisibleError {
 // This function should calculate `a` divided by `b` if `a` is
 // evenly divisible by b.
 // Otherwise, it should return a suitable error.
-pub fn divide(a: i32, b: i32) -> Result<i32, DivisionError> {}
+pub fn divide(a: i32, b: i32) -> Result<i32, DivisionError> {
+    if b == 0 {
+        Err(DivisionError::DivideByZero)
+    } else if a % b != 0 {
+        Err(DivisionError::NotDivisible(NotDivisibleError { dividend: a, divisor: b }))
+    } else {
+        Ok(a / b)
+    }
+}
 
 #[cfg(test)]
 mod tests {
@@ -41,7 +49,7 @@ mod tests {
             divide(81, 6),
             Err(DivisionError::NotDivisible(NotDivisibleError {
                 dividend: 81,
-                divisor: 6
+                divisor: 6,
             }))
         );
     }
@@ -57,12 +65,12 @@ mod tests {
     }
 
     // Iterator exercises using your `divide` function
-    /*
+
     #[test]
     fn result_with_list() {
         let numbers = vec![27, 297, 38502, 81];
         let division_results = numbers.into_iter().map(|n| divide(n, 27));
-        let x //... Fill in here!
+        let x: Result<Vec<i32>, String> = Ok(division_results.map(|i|i.unwrap()).collect());
         assert_eq!(format!("{:?}", x), "Ok([1, 11, 1426, 3])");
     }
 
@@ -70,76 +78,15 @@ mod tests {
     fn list_of_results() {
         let numbers = vec![27, 297, 38502, 81];
         let division_results = numbers.into_iter().map(|n| divide(n, 27));
-        let x //... Fill in here!
+        let x: Vec<Result<i32, DivisionError>> = division_results.collect();
         assert_eq!(format!("{:?}", x), "[Ok(1), Ok(11), Ok(1426), Ok(3)]");
     }
-    */
+
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 // Minor hint: In each of the two cases in the match in main, you can create x with either
 // a 'turbofish' or by hinting the type of x to the compiler. You may try both.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 // Major hint: Have a look at the Iter trait and at the explanation of its collect function.
